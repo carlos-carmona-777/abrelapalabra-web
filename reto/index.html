@@ -73,6 +73,15 @@
       m.textContent = "“" + reto.message + "”";
       m.hidden = false;
     }
+    // Duelo: si el link trae el resultado del creador, presume el marcador.
+    if (reto.creatorRows && reto.creatorRows.length) {
+      var duel = document.getElementById("message");
+      var intentos = reto.creatorRows.length;
+      duel.textContent = reto.creatorWon
+        ? "Lo logró en " + intentos + " intento" + (intentos === 1 ? "" : "s") + " — ¿puedes superarlo?"
+        : "No logró sacarla… ¿tú sí?";
+      duel.hidden = false;
+    }
     // Solo el NÚMERO de casillas: la palabra jamás se muestra.
     var len = (reto.word || "").length;
     if (len >= 4 && len <= 7) {
