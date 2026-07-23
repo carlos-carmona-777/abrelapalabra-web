@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abre la Palabra — Wordle en español por temas</title>
+<meta name="description" content="Adivina la palabra del día, colecciona datos curiosos y reta a tus amigos. Wordle en español con temas.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(145deg, #5950EF 0%, #38268C 100%);
+    color: #fff; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    padding: 24px;
+  }
+  .card { max-width: 420px; }
+  .tiles { display: grid; grid-template-columns: repeat(2, 84px); gap: 12px; justify-content: center; margin-bottom: 28px; }
+  .tile {
+    width: 84px; height: 84px; border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px; font-weight: 800;
+    box-shadow: 0 10px 26px rgba(0,0,0,.28);
+  }
+  .t-white { background: #fff; color: #26262e; }
+  .t-green { background: #43A047; color: #fff; }
+  .t-amber { background: #E5A50A; color: #fff; }
+  h1 { font-size: 34px; font-weight: 800; letter-spacing: .5px; margin-bottom: 10px; }
+  p  { font-size: 17px; line-height: 1.5; opacity: .85; margin-bottom: 28px; }
+  .btn {
+    display: inline-block; background: #fff; color: #38268C;
+    font-weight: 700; font-size: 17px; text-decoration: none;
+    padding: 15px 34px; border-radius: 999px;
+  }
+  .soon { display: block; margin-top: 14px; font-size: 14px; opacity: .6; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="tiles" aria-hidden="true">
+      <div class="tile t-white">A</div><div class="tile t-green">B</div>
+      <div class="tile t-amber">R</div><div class="tile t-white">E</div>
+    </div>
+    <h1>👑 Abre la Palabra</h1>
+    <p>El juego de palabras en español por temas: desafío diario, crucigramas, colección de datos curiosos y retos entre amigos.</p>
+    <a class="btn" href="#" id="store">Descargar en el App Store</a>
+    <span class="soon">Muy pronto disponible</span>
+  </div>
+</body>
+</html>

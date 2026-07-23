@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🎯 Te han retado — Abre la Palabra</title>
+<meta name="description" content="Alguien te ha retado a adivinar una palabra en Abre la Palabra.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(145deg, #5950EF 0%, #38268C 100%);
+    color: #fff; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    padding: 24px;
+  }
+  .card { max-width: 420px; }
+  .target { font-size: 64px; margin-bottom: 18px; }
+  h1 { font-size: 28px; font-weight: 800; line-height: 1.3; margin-bottom: 10px; }
+  h1 span { color: #FFD76A; }
+  .msg {
+    font-size: 16px; font-style: italic; opacity: .9;
+    background: rgba(255,255,255,.12); border-radius: 16px;
+    padding: 12px 18px; margin: 0 0 10px;
+  }
+  .grid { display: flex; gap: 8px; justify-content: center; margin: 22px 0 26px; }
+  .cell {
+    width: 46px; height: 46px; border-radius: 10px;
+    background: rgba(255,255,255,.16);
+    border: 2px solid rgba(255,255,255,.35);
+  }
+  p.sub { font-size: 16px; line-height: 1.5; opacity: .85; margin-bottom: 26px; }
+  .btn {
+    display: inline-block; background: #fff; color: #38268C;
+    font-weight: 700; font-size: 17px; text-decoration: none;
+    padding: 15px 34px; border-radius: 999px; margin-bottom: 14px;
+  }
+  .open {
+    display: block; color: #fff; font-size: 15px; font-weight: 600;
+    text-decoration: underline; opacity: .85; margin-top: 4px;
+  }
+  .brand { margin-top: 34px; font-size: 14px; opacity: .6; font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="target" aria-hidden="true">🎯</div>
+    <h1><span id="creator">Alguien</span> te ha retado a adivinar una palabra</h1>
+    <p class="msg" id="message" hidden></p>
+    <div class="grid" id="grid" aria-hidden="true"></div>
+    <p class="sub">Descarga <strong>Abre la Palabra</strong> y demuestra cuántos intentos necesitas.</p>
+    <a class="btn" href="#" id="store">Descargar en el App Store</a>
+    <a class="open" id="openApp" href="#" hidden>¿Ya tienes la app? Abrir el reto</a>
+    <div class="brand">👑 Abre la Palabra</div>
+  </div>
+<script>
+(function () {
+  function decode(b64url) {
+    var b64 = b64url.replace(/-/g, "+").replace(/_/g, "/");
+    while (b64.length % 4) { b64 += "="; }
+    var bytes = Uint8Array.from(atob(b64), function (c) { return c.charCodeAt(0); });
+    return JSON.parse(new TextDecoder("utf-8").decode(bytes));
+  }
+  try {
+    var d = new URLSearchParams(location.search).get("d");
+    if (!d) return;
+    var reto = decode(d);
+    if (reto.creator) {
+      document.getElementById("creator").textContent = reto.creator;
+    }
+    if (reto.message) {
+      var m = document.getElementById("message");
+      m.textContent = "“" + reto.message + "”";
+      m.hidden = false;
+    }
+    // Solo el NÚMERO de casillas: la palabra jamás se muestra.
+    var len = (reto.word || "").length;
+    if (len >= 4 && len <= 7) {
+      var grid = document.getElementById("grid");
+      for (var i = 0; i < len; i++) {
+        var c = document.createElement("div");
+        c.className = "cell";
+        grid.appendChild(c);
+      }
+    }
+    // Fallback para abrir la app por esquema si el universal link no saltó.
+    var open = document.getElementById("openApp");
+    open.href = "abrelapalabra://reto?d=" + encodeURIComponent(d);
+    open.hidden = false;
+  } catch (e) { /* enlace corrupto: la página genérica sigue sirviendo */ }
+})();
+</script>
+</body>
+</html>
